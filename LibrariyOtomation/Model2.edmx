@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DbLibraryOtomationModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TblBook">
+          <Key>
+            <PropertyRef Name="BookID" />
+          </Key>
+          <Property Name="BookID" Type="smallint" Nullable="false" />
+          <Property Name="BookName" Type="nvarchar" MaxLength="70" />
+        </EntityType>
+        <EntityType Name="TblBookSave">
+          <Key>
+            <PropertyRef Name="BookSaveID" />
+          </Key>
+          <Property Name="BookSaveID" Type="smallint" Nullable="false" />
+          <Property Name="WriterID" Type="smallint" />
+          <Property Name="PublisherID" Type="smallint" />
+          <Property Name="BookID" Type="smallint" />
+          <Property Name="BookValume" Type="tinyint" />
+          <Property Name="BookPage" Type="smallint" />
+          <Property Name="BookPrice" Type="decimal" Precision="7" Scale="2" />
+          <Property Name="BookPublishedYear" Type="smallint" />
+          <Property Name="BookStuation" Type="nvarchar" MaxLength="20" />
+          <Property Name="BookType" Type="nvarchar" MaxLength="20" />
+          <Property Name="BookRegistrationDate" Type="date" />
+        </EntityType>
+        <EntityType Name="TblPublisher">
+          <Key>
+            <PropertyRef Name="PublisherID" />
+          </Key>
+          <Property Name="PublisherID" Type="smallint" Nullable="false" />
+          <Property Name="PublisherName" Type="nvarchar" MaxLength="120" />
+        </EntityType>
+        <EntityType Name="TblWriter">
+          <Key>
+            <PropertyRef Name="WriterID" />
+          </Key>
+          <Property Name="WriterID" Type="smallint" Nullable="false" />
+          <Property Name="WriterName" Type="nvarchar" MaxLength="60" />
+        </EntityType>
+        <Association Name="FK_TblBook_TblPublisher">
+          <End Role="TblPublisher" Type="Self.TblPublisher" Multiplicity="0..1" />
+          <End Role="TblBookSave" Type="Self.TblBookSave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblPublisher">
+              <PropertyRef Name="PublisherID" />
+            </Principal>
+            <Dependent Role="TblBookSave">
+              <PropertyRef Name="PublisherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TblBook_TblWriter">
+          <End Role="TblWriter" Type="Self.TblWriter" Multiplicity="0..1" />
+          <End Role="TblBookSave" Type="Self.TblBookSave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblWriter">
+              <PropertyRef Name="WriterID" />
+            </Principal>
+            <Dependent Role="TblBookSave">
+              <PropertyRef Name="WriterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TblBookSave_TblBook">
+          <End Role="TblBook" Type="Self.TblBook" Multiplicity="0..1" />
+          <End Role="TblBookSave" Type="Self.TblBookSave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblBook">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="TblBookSave">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbLibraryOtomationModel1StoreContainer">
+          <EntitySet Name="TblBook" EntityType="Self.TblBook" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblBookSave" EntityType="Self.TblBookSave" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblPublisher" EntityType="Self.TblPublisher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblWriter" EntityType="Self.TblWriter" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TblBook_TblPublisher" Association="Self.FK_TblBook_TblPublisher">
+            <End Role="TblPublisher" EntitySet="TblPublisher" />
+            <End Role="TblBookSave" EntitySet="TblBookSave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TblBook_TblWriter" Association="Self.FK_TblBook_TblWriter">
+            <End Role="TblWriter" EntitySet="TblWriter" />
+            <End Role="TblBookSave" EntitySet="TblBookSave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TblBookSave_TblBook" Association="Self.FK_TblBookSave_TblBook">
+            <End Role="TblBook" EntitySet="TblBook" />
+            <End Role="TblBookSave" EntitySet="TblBookSave" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbLibraryOtomationModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TblBook">
+          <Key>
+            <PropertyRef Name="BookID" />
+          </Key>
+          <Property Name="BookID" Type="Int16" Nullable="false" />
+          <Property Name="BookName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TblBookSave" Relationship="Self.FK_TblBookSave_TblBook" FromRole="TblBook" ToRole="TblBookSave" />
+        </EntityType>
+        <EntityType Name="TblBookSave">
+          <Key>
+            <PropertyRef Name="BookSaveID" />
+          </Key>
+          <Property Name="BookSaveID" Type="Int16" Nullable="false" />
+          <Property Name="WriterID" Type="Int16" />
+          <Property Name="PublisherID" Type="Int16" />
+          <Property Name="BookID" Type="Int16" />
+          <Property Name="BookValume" Type="Byte" />
+          <Property Name="BookPage" Type="Int16" />
+          <Property Name="BookPrice" Type="Decimal" Precision="7" Scale="2" />
+          <Property Name="BookPublishedYear" Type="Int16" />
+          <Property Name="BookStuation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BookRegistrationDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="TblBook" Relationship="Self.FK_TblBookSave_TblBook" FromRole="TblBookSave" ToRole="TblBook" />
+          <NavigationProperty Name="TblPublisher" Relationship="Self.FK_TblBook_TblPublisher" FromRole="TblBookSave" ToRole="TblPublisher" />
+          <NavigationProperty Name="TblWriter" Relationship="Self.FK_TblBook_TblWriter" FromRole="TblBookSave" ToRole="TblWriter" />
+          <Property Name="BookType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TblPublisher">
+          <Key>
+            <PropertyRef Name="PublisherID" />
+          </Key>
+          <Property Name="PublisherID" Type="Int16" Nullable="false" />
+          <Property Name="PublisherName" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TblBookSave" Relationship="Self.FK_TblBook_TblPublisher" FromRole="TblPublisher" ToRole="TblBookSave" />
+        </EntityType>
+        <EntityType Name="TblWriter">
+          <Key>
+            <PropertyRef Name="WriterID" />
+          </Key>
+          <Property Name="WriterID" Type="Int16" Nullable="false" />
+          <Property Name="WriterName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TblBookSave" Relationship="Self.FK_TblBook_TblWriter" FromRole="TblWriter" ToRole="TblBookSave" />
+        </EntityType>
+        <Association Name="FK_TblBookSave_TblBook">
+          <End Role="TblBook" Type="Self.TblBook" Multiplicity="0..1" />
+          <End Role="TblBookSave" Type="Self.TblBookSave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblBook">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="TblBookSave">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TblBook_TblPublisher">
+          <End Role="TblPublisher" Type="Self.TblPublisher" Multiplicity="0..1" />
+          <End Role="TblBookSave" Type="Self.TblBookSave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblPublisher">
+              <PropertyRef Name="PublisherID" />
+            </Principal>
+            <Dependent Role="TblBookSave">
+              <PropertyRef Name="PublisherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TblBook_TblWriter">
+          <End Role="TblWriter" Type="Self.TblWriter" Multiplicity="0..1" />
+          <End Role="TblBookSave" Type="Self.TblBookSave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblWriter">
+              <PropertyRef Name="WriterID" />
+            </Principal>
+            <Dependent Role="TblBookSave">
+              <PropertyRef Name="WriterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbLibraryOtomationEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TblBook" EntityType="Self.TblBook" />
+          <EntitySet Name="TblBookSave" EntityType="Self.TblBookSave" />
+          <EntitySet Name="TblPublisher" EntityType="Self.TblPublisher" />
+          <EntitySet Name="TblWriter" EntityType="Self.TblWriter" />
+          <AssociationSet Name="FK_TblBookSave_TblBook" Association="Self.FK_TblBookSave_TblBook">
+            <End Role="TblBook" EntitySet="TblBook" />
+            <End Role="TblBookSave" EntitySet="TblBookSave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TblBook_TblPublisher" Association="Self.FK_TblBook_TblPublisher">
+            <End Role="TblPublisher" EntitySet="TblPublisher" />
+            <End Role="TblBookSave" EntitySet="TblBookSave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TblBook_TblWriter" Association="Self.FK_TblBook_TblWriter">
+            <End Role="TblWriter" EntitySet="TblWriter" />
+            <End Role="TblBookSave" EntitySet="TblBookSave" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbLibraryOtomationModel1StoreContainer" CdmEntityContainer="DbLibraryOtomationEntities2">
+          <EntitySetMapping Name="TblBook">
+            <EntityTypeMapping TypeName="DbLibraryOtomationModel1.TblBook">
+              <MappingFragment StoreEntitySet="TblBook">
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblBookSave">
+            <EntityTypeMapping TypeName="DbLibraryOtomationModel1.TblBookSave">
+              <MappingFragment StoreEntitySet="TblBookSave">
+                <ScalarProperty Name="BookType" ColumnName="BookType" />
+                <ScalarProperty Name="BookSaveID" ColumnName="BookSaveID" />
+                <ScalarProperty Name="WriterID" ColumnName="WriterID" />
+                <ScalarProperty Name="PublisherID" ColumnName="PublisherID" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="BookValume" ColumnName="BookValume" />
+                <ScalarProperty Name="BookPage" ColumnName="BookPage" />
+                <ScalarProperty Name="BookPrice" ColumnName="BookPrice" />
+                <ScalarProperty Name="BookPublishedYear" ColumnName="BookPublishedYear" />
+                <ScalarProperty Name="BookStuation" ColumnName="BookStuation" />
+                <ScalarProperty Name="BookRegistrationDate" ColumnName="BookRegistrationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblPublisher">
+            <EntityTypeMapping TypeName="DbLibraryOtomationModel1.TblPublisher">
+              <MappingFragment StoreEntitySet="TblPublisher">
+                <ScalarProperty Name="PublisherID" ColumnName="PublisherID" />
+                <ScalarProperty Name="PublisherName" ColumnName="PublisherName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblWriter">
+            <EntityTypeMapping TypeName="DbLibraryOtomationModel1.TblWriter">
+              <MappingFragment StoreEntitySet="TblWriter">
+                <ScalarProperty Name="WriterID" ColumnName="WriterID" />
+                <ScalarProperty Name="WriterName" ColumnName="WriterName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
